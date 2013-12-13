@@ -22,8 +22,15 @@ def whyrun_supported?
 end
 
 action :create do
-  ssl_secret = Chef::EncryptedDataBagItem.load_secret(new_resource.data_bag_secret)
-  ssl_item = Chef::EncryptedDataBagItem.load(new_resource.data_bag, new_resource.search_id, ssl_secret)
+
+  if new_resource.use_vault
+    chef_gem "chef-vault"
+    require "chef-vault"
+    ssl_item = ChefVault::Item.load(new_resource.data_bag, new_resource.search_id)
+  else 
+    ssl_secret = Chef::EncryptedDataBagItem.load_secret(new_resource.data_bag_secret)
+    ssl_item = Chef::EncryptedDataBagItem.load(new_resource.data_bag, new_resource.search_id, ssl_secret)
+  end
 
   if new_resource.create_subfolders
     cert_directory_resource "certs"
