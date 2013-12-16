@@ -53,11 +53,11 @@ attribute :chain_file, :kind_of => String, :default => "#{node['hostname']}-bund
 attribute :create_subfolders, :kind_of => [ TrueClass, FalseClass ], :default => true
 
 # respect the node level attribute default for using chef-vault
-if !node['certificate']['use_vault'].empty?
+#if !node['certificate']['use_vault'].empty?
   attribute :use_vault, :kind_of => [ TrueClass, FalseClass ], :default => true
-else
-  attribute :use_vault, :kind_of => [ TrueClass, FalseClass ], :default => false
-end
+#else
+#  attribute :use_vault, :kind_of => [ TrueClass, FalseClass ], :default => false
+#end
 
 # The owner and group of the managed certificate and key
 attribute :owner, :kind_of => String, :default => "root"
